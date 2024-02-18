@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
-using UnityEditor.TextCore.Text;
 
 public class ShootBall : MonoBehaviour
 {
@@ -17,6 +16,12 @@ public class ShootBall : MonoBehaviour
     public int Counter = 0;
     public TextMeshProUGUI text;
     public int poolSize = 6;
+    public int enemiesKilled = 0;
+    public TextMeshProUGUI text2;
+    private bool onShootCD = false;
+    private float shootcd = 1f;
+    public TextMeshProUGUI text3;
+    public int shotsFired = 0;
     void Start()
     {
         
@@ -27,12 +32,16 @@ public class ShootBall : MonoBehaviour
     {
         Debug.DrawRay(spawnPoint.position, spawnPoint.forward * 6, Color.red);
 
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && !onShootCD)
         {
             Shoot();
             Pop.Play();
+            shotsFired += 1;
+            text3.text = shotsFired.ToString();
+            StartCoroutine(ShootCD());
+            
         }
-        if(Counter == 2)
+        if(enemiesKilled == 5)
         {
             SceneManager.LoadScene("Winner", LoadSceneMode.Single);
         }
@@ -47,7 +56,9 @@ public class ShootBall : MonoBehaviour
             {
                 Rigidbody rb = hit.collider.gameObject.GetComponent<Rigidbody>();
                 rb.isKinematic = false;
-                Destroy(hit.collider.gameObject, 2f);
+                Destroy(hit.collider.gameObject, 1f);
+                enemiesKilled += 1;
+                text2.text = enemiesKilled.ToString();
             }
             if(hit.collider.gameObject.tag == "Block")
             {
@@ -67,5 +78,12 @@ public class ShootBall : MonoBehaviour
         GameObject newBullet = Instantiate(bullet, spawnPoint.position, spawnPoint.rotation);
         newBullet.GetComponent<Rigidbody>().AddRelativeForce(0, 0, velocity);
         Destroy(newBullet, 3F);
+    }
+
+    IEnumerator ShootCD()
+    {
+        onShootCD = true;
+        yield return new WaitForSeconds(shootcd);
+        onShootCD = false;
     }
 }

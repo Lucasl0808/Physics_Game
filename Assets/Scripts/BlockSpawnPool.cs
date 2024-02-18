@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
-using static UnityEditor.FilePathAttribute;
 
 public class BlockSpawnPool : MonoBehaviour
 {
-    private int poolSize = 4;
+    //private int poolSize = 4;
     public static ObjectPool<PoolBlock> _pool;
-    private List<PoolBlock> spawnList;
-    private int spawnCount;
+    //private List<PoolBlock> spawnList;
+    //private int spawnCount;
     public PoolBlock spawnBlock;
     public int maxPoolSize;
     public float interval = 2f;
@@ -19,7 +18,7 @@ public class BlockSpawnPool : MonoBehaviour
     void Start()
     {
         // from https://thegamedev.guru/unity-cpu-performance/object-pooling/
-        _pool = new ObjectPool<PoolBlock>(createFunc: () => new PoolBlock() , actionOnGet: (obj) => obj.gameObject.SetActive(true), actionOnRelease: (obj) => obj.gameObject.SetActive(false), actionOnDestroy: (obj) => Destroy(obj), collectionCheck: false, defaultCapacity: 4, maxSize: 4);
+        //_pool = new ObjectPool<PoolBlock>(createFunc: () => new PoolBlock() , actionOnGet: (obj) => obj.gameObject.SetActive(true), actionOnRelease: (obj) => obj.gameObject.SetActive(false), actionOnDestroy: (obj) => Destroy(obj), collectionCheck: false, defaultCapacity: 4, maxSize: 4);
 
         /*spawnList = new List<PoolBlock>();
         PoolBlock temp;

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class CollisionManaager : MonoBehaviour
 {
@@ -30,6 +32,10 @@ public class CollisionManaager : MonoBehaviour
 
     void Update()
     {
+        if (slider.value <= 0)
+        {
+            SceneManager.LoadScene("Loser", LoadSceneMode.Single);
+        }
         if (collide && !onBreak && !wasCollideLastFrame)
         {
             slider.value -= 5;

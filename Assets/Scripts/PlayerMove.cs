@@ -1,16 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMove : MonoBehaviour
 {
     public float speed = 3.0F;
-    public float rotateSpeed = 3.0F;
+    public float rotateSpeed = 1.0F;
     public float jumpForce = 2;
     public float gravity = 1F;
     private CharacterController controller;
     public bool collided = false;
-
+    public Slider hp;
     void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -19,6 +20,11 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
+        if (transform.position.y < -5)
+        {
+            hp.value = 0;
+        }
+
         collided = false;
         if (Input.GetButton("Fire3"))
         {
